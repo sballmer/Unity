@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\4.BlockBreaker\Assets\Scripts\Paddle.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Paddle.cs">
     <Files>
-      <File FileName="..\4.BlockBreaker\Assets\Scripts\Paddle.cs" Line="39" Column="94" />
+      <File FileName="Assets\Scripts\Paddle.cs" Line="39" Column="94" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
