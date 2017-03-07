@@ -61,7 +61,7 @@ public class EnemyFormation: MonoBehaviour {
 			!goingRight && this.transform.position.x < xmin)
 		{
 			goingRight = !goingRight;
-			this.transform.position += Vector3.down * horizontalStep;
+			//this.transform.position += Vector3.down * horizontalStep;
 		}
 	}
 }

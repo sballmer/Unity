@@ -4,11 +4,17 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour 
 {
 	public float speed = 10.0f;
+	public float maxFireRate = 0.1f; // in Hz
+	public GameObject projectile;
+	public float startingLife = 500f;
+	public float life { get; private set; }
 
 	private float xmin = -5, xmax = 5;
 
 	void Start()
 	{
+		life = startingLife;
+
 		// sprite
 		Sprite currentSprite = this.GetComponent<SpriteRenderer> ().sprite;
 
@@ -50,5 +56,45 @@ public class PlayerControl : MonoBehaviour
 			// setting position
 			this.transform.position = pos;
 		}
+
+		if (Input.GetKeyDown (KeyCode.Space)) 
+			InvokeRepeating ("fire", 0.00001f, maxFireRate);
+		else if (Input.GetKeyUp (KeyCode.Space))
+			CancelInvoke ("fire");
+	}
+
+	void OnTriggerEnter2D(Collider2D collider)
+	{
+		Projectile laser = collider.gameObject.GetComponent<Projectile> ();
+
+		if (laser) // if it is an enemy laser
+		{
+			takeDammage(laser.getDamageAmount() );
+			laser.hit();
+		}
+	}
+
+	void takeDammage(float dammage)
+	{
+		life -= dammage;
+
+		if (life <= 0f) 
+		{
+			this.GetComponent<SpriteRenderer>().enabled = false;
+
+			Invoke("lose", 2f);
+		}
+	}
+
+	void fire()
+	{
+		Instantiate(projectile, this.transform.position, Quaternion.identity);
+	}
+
+	void lose()
+	{
+		print ("here");
+		LevelManager levelManager = GameObject.FindObjectOfType<LevelManager> ();
+		levelManager.LoadLevel ("Lose Screen");
 	}
 }
