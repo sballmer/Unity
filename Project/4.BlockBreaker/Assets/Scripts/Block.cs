@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Block : MonoBehaviour 
 {
+	public GameObject smoke, littleSmoke;
 	public static int totalNumberOfBlock = 0;
 	public Sprite[] blockSprite;
 
@@ -34,16 +35,43 @@ public class Block : MonoBehaviour
 				levelManager.LoadNextLevel ();
 			}
 
+			showSmoke();
 			Destroy (gameObject);
 		} 
 		else 
 		{
+			showLittleSmoke();
 			loadSprite ();
 		}
 	}
 
+	void showSmoke()
+	{
+		if (smoke != null) 
+		{
+			GameObject smokeGenerated = Instantiate (smoke, this.transform.position, Quaternion.identity) as GameObject;
+			smokeGenerated.particleSystem.startColor = this.GetComponent<SpriteRenderer> ().color;
+		} 
+		else
+			Debug.LogError ("no smoke particule game object specified for block");
+	}
+
+	void showLittleSmoke()
+	{
+		if (littleSmoke != null) 
+		{
+			GameObject smokeGenerated = Instantiate (littleSmoke, this.transform.position, Quaternion.identity) as GameObject;
+			smokeGenerated.particleSystem.startColor = this.GetComponent<SpriteRenderer> ().color;
+		} 
+		else
+			Debug.LogError ("no smoke particule game object specified for block");
+	}
+
 	void loadSprite()
 	{
-		this.GetComponent<SpriteRenderer> ().sprite = blockSprite [timesHit];
+		if (blockSprite [timesHit] != null)
+			this.GetComponent<SpriteRenderer> ().sprite = blockSprite [timesHit];
+		else
+			Debug.LogError ("no sprite specified for the block");
 	}
 }
