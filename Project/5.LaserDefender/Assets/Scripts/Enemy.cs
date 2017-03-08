@@ -9,9 +9,16 @@ public class Enemy : MonoBehaviour
 	public float life { get; private set;}
 	public float fireRate = 0.5f;
 	public GameObject projectile;
+	public int enemyPoint = 10;
+	public AudioClip enemyLaserSound;
+	public AudioClip enemyExplodeSound;
+	public GameObject explosionAnimation;
+
+	private ScoreKeeper score;
 
 	void Start()
 	{
+		score = GameObject.Find ("Score").GetComponent<ScoreKeeper> ();
 		life = startingLife;
 		enemyCounter++;
 	}
@@ -39,17 +46,36 @@ public class Enemy : MonoBehaviour
 
 		if (life <= 0f) 
 		{
-			enemyCounter--;
-
-			if (enemyCounter <= 0)
-				GameObject.FindObjectOfType<LevelManager>().LoadLevel("Win Screen");
-
-			Destroy(this.gameObject);
+			Dead ();
 		}
 	}
 
 	void fire()
 	{
 		Instantiate (projectile, transform.position, Quaternion.identity);
+		AudioSource.PlayClipAtPoint (enemyLaserSound, this.transform.position);
+	}
+
+	static public int getEnemyNumber()
+	{
+		return enemyCounter;
+	}
+
+	void Dead()
+	{
+		AudioSource.PlayClipAtPoint (enemyExplodeSound, this.transform.position);
+
+		enemyCounter--;
+		
+		score.addPoint(enemyPoint);
+
+		Instantiate (explosionAnimation, this.transform.position, Quaternion.identity);
+		
+		Destroy(this.gameObject);
+	}
+
+	static public void reset()
+	{
+		enemyCounter = 0;
 	}
 }

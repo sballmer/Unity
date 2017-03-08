@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyFormation: MonoBehaviour {
+public class EnemyFormation: MonoBehaviour 
+{
 
 	public GameObject[] enemy_prefab;
 	public float width = 5f, height = 5f;
 	public float lateralSpeed = 2f;
 	public float horizontalStep = 0.5f;
+	public float delayEnemyCreation = 0.3f;
 
 	private bool goingRight = true;
 	private float xmin = -5f, xmax = 5f;
@@ -21,11 +23,7 @@ public class EnemyFormation: MonoBehaviour {
 		xmin = Camera.main.ViewportToWorldPoint (new Vector3 (0, 0, distance)).x + width/2;
 		xmax = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, distance)).x - width/2;
 
-		// creating enemy at defined position
-		foreach (Transform child in transform) 
-		{
-			createNewEnemy(0, child);
-		}
+		createAllEnemy ();
 	}
 	
 	// Update is called once per frame
@@ -37,6 +35,22 @@ public class EnemyFormation: MonoBehaviour {
 			this.transform.position += Vector3.left * lateralSpeed * Time.deltaTime;
 
 		checkGoneTooFar ();
+
+		if (Enemy.getEnemyNumber () <= 0)
+			createAllEnemy ();
+	}
+
+	void createAllEnemy()
+	{
+		Transform freePosition = nextFreePosition ();
+
+		if (freePosition != null) 
+		{
+			createNewEnemy(0, freePosition);
+
+			if (Enemy.getEnemyNumber() < this.transform.childCount) // if there still are some enemy to spawn
+				Invoke ("createAllEnemy", delayEnemyCreation);
+		}
 	}
 
 	void createNewEnemy(int index, Transform trans)
@@ -63,5 +77,15 @@ public class EnemyFormation: MonoBehaviour {
 			goingRight = !goingRight;
 			//this.transform.position += Vector3.down * horizontalStep;
 		}
+	}
+
+	Transform nextFreePosition() 
+	{
+		foreach (Transform child in this.transform) 
+		{
+			if (child.childCount == 0)
+				return child;
+		}
+		return null;
 	}
 }

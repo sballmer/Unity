@@ -8,8 +8,12 @@ public class PlayerControl : MonoBehaviour
 	public GameObject projectile;
 	public float startingLife = 500f;
 	public float life { get; private set; }
+	public AudioClip playerLaserSound;
+	public AudioClip playerExplodeSound;
+	public GameObject explosion;
 
 	private float xmin = -5, xmax = 5;
+	private bool dead = false;
 
 	void Start()
 	{
@@ -78,9 +82,13 @@ public class PlayerControl : MonoBehaviour
 	{
 		life -= dammage;
 
-		if (life <= 0f) 
+		if (life <= 0f && !dead) 
 		{
 			this.GetComponent<SpriteRenderer>().enabled = false;
+			AudioSource.PlayClipAtPoint(playerExplodeSound, this.transform.position);
+			dead = true;
+
+			Instantiate(explosion, this.transform.position, Quaternion.identity);
 
 			Invoke("lose", 2f);
 		}
@@ -88,13 +96,17 @@ public class PlayerControl : MonoBehaviour
 
 	void fire()
 	{
-		Instantiate(projectile, this.transform.position, Quaternion.identity);
+		if (!dead) 
+		{
+			Instantiate (projectile, this.transform.position, Quaternion.identity);
+			AudioSource.PlayClipAtPoint (playerLaserSound, this.transform.position);
+		}
 	}
 
 	void lose()
 	{
-		print ("here");
+		Enemy.reset ();
 		LevelManager levelManager = GameObject.FindObjectOfType<LevelManager> ();
-		levelManager.LoadLevel ("Lose Screen");
+		levelManager.LoadLevel ("Win Screen");
 	}
 }
