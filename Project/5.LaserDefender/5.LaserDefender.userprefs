@@ -1,13 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ScoreKeeper.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\6.GlitchGarden\Assets\Script\LevelManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\LabelScore.cs" Line="10" Column="89" />
-      <File FileName="Assets\Scripts\PlayerControl.cs" Line="108" Column="18" />
-      <File FileName="Assets\Scripts\Explosion.cs" Line="38" Column="16" />
-      <File FileName="Assets\Scripts\Enemy.cs" Line="23" Column="18" />
-      <File FileName="Assets\Scripts\EnemyFormation.cs" Line="20" Column="1" />
-      <File FileName="Assets\Scripts\ScoreKeeper.cs" Line="13" Column="12" />
+      <File FileName="..\6.GlitchGarden\Assets\Script\LevelManager.cs" Line="11" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
