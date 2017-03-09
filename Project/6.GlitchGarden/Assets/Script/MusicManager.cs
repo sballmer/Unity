@@ -34,4 +34,12 @@ public class MusicManager : MonoBehaviour
 			audioSource.Play ();
 		}
 	}
+
+	public void setVolume(float volume)
+	{
+		if (volume >= 0f && volume <= 1f)
+			audioSource.volume = volume;
+		else
+			Debug.LogError ("Volume range invalid");
+	}
 }
