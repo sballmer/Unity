@@ -7,8 +7,7 @@ public class OptionManager : MonoBehaviour
 	public LevelManager levelManager;
 	public Slider volumeSlider, difficultySlider;
 
-
-	private const float defaultVolume = 0.5f, defaultDifficulty = 1f;
+	
 	private MusicManager musicManager;
 
 	// Use this for initialization
@@ -17,8 +16,8 @@ public class OptionManager : MonoBehaviour
 		musicManager = GameObject.FindObjectOfType<MusicManager> ();
 
 		// setting stored values
-		volumeSlider.value = PlayerPreferencesManager.getMasterVolume ();
-		difficultySlider.value = PlayerPreferencesManager.getDifficulty ();
+		volumeSlider.value = PlayerPreferencesManager.Volume.get();
+		difficultySlider.value = PlayerPreferencesManager.Difficulty.get();
 	}
 	
 	// Update is called once per frame
@@ -30,8 +29,8 @@ public class OptionManager : MonoBehaviour
 
 	void saveOptions()
 	{
-		PlayerPreferencesManager.setMasterVolume (volumeSlider.value);
-		PlayerPreferencesManager.setDifficulty (difficultySlider.value);
+		PlayerPreferencesManager.Volume.set (volumeSlider.value);
+		PlayerPreferencesManager.Difficulty.set (difficultySlider.value);
 	}
 
 	public void saveAndExit()
@@ -45,7 +44,7 @@ public class OptionManager : MonoBehaviour
 
 	public void setDefaultValues()
 	{
-		volumeSlider.value = defaultVolume;
-		difficultySlider.value = defaultDifficulty;
+		volumeSlider.value = PlayerPreferencesManager.Volume.getDefault();
+		difficultySlider.value = PlayerPreferencesManager.Difficulty.getDefault();
 	}
 }
