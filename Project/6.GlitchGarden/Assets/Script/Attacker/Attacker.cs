@@ -5,16 +5,30 @@ public class Attacker : MonoBehaviour
 {
 	[Range (0f, 1f)] 
 	public float walkSpeed;
+	public float dammage;
 
 	private Rigidbody2D rigidBody;
 	private GameObject attackingTarget;
+	private Animator anim;
 	private const float periodAttack = 1f; // 1 hz
+	private bool isAttacking = false;
 
 	// Use this for initialization
 	void Start () 
 	{
 		attackingTarget = null;
 		rigidBody = this.gameObject.GetComponent<Rigidbody2D> ();
+		anim = this.gameObject.GetComponent<Animator> ();
+	}
+
+	void Update()
+	{
+		if (isAttacking && attackingTarget == null)
+		{
+			anim.SetBool("IsAttacking", false);
+			CancelInvoke("givaDammage");
+			isAttacking = false;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collider)
@@ -22,10 +36,9 @@ public class Attacker : MonoBehaviour
 		Debug.Log ("Trigg" + name);
 	}
 
-	void setSpeed(float speed = 0f)
+	void OnTriggerExit2D(Collider2D collider)
 	{
-		walkSpeed = speed;
-		rigidBody.velocity = new Vector3 ( -walkSpeed, 0f, 0f);
+		Debug.Log ("exit trigg" + name);
 	}
 
 	public void setSpeedFactor(float factor)
@@ -33,15 +46,18 @@ public class Attacker : MonoBehaviour
 		rigidBody.velocity = new Vector3 ( -walkSpeed * factor, 0f, 0f);
 	}
 
-	public void StrikeCurrentTarget()
-	{
-		Debug.Log (name + " strike his current target");
-	}
-
 	public void aggress(GameObject target)
 	{
 		attackingTarget = target;
-
-		// Invoke (attackingTarget, periodAttack); // invoque periodiqualy the dammage, when do you cancel it ?
+		isAttacking = true;
+		InvokeRepeating ("giveDammage", 0.0001f, periodAttack);
+	}
+	
+	void giveDammage()
+	{
+		if (attackingTarget)
+		{
+			attackingTarget.GetComponent<Health>().ReceiveDammage (dammage);
+		}
 	}
 }

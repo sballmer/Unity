@@ -51,6 +51,7 @@
      <Compile Include="Assets\Script\Attacker\Lizard.cs" />
      <Compile Include="Assets\Script\Defender.cs" />
      <Compile Include="Assets\Script\FadeIn.cs" />
+     <Compile Include="Assets\Script\Health.cs" />
      <Compile Include="Assets\Script\LevelManager.cs" />
      <Compile Include="Assets\Script\MusicManager.cs" />
      <Compile Include="Assets\Script\OptionManager.cs" />

@@ -13,12 +13,6 @@ public class Fox : MonoBehaviour
 		anim = this.GetComponent<Animator> ();
 		attacker = this.GetComponent<Attacker> ();
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
-	}
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
@@ -28,10 +22,10 @@ public class Fox : MonoBehaviour
 			return;
 		else if (collideWith.GetComponent<Stone> ())
 			anim.SetTrigger ("Jump");
-		else 
+		else
 		{
 			attacker.aggress(collideWith);
+			anim.SetBool("IsAttacking", true);
 		}
-
 	}
 }
