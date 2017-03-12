@@ -33,12 +33,14 @@ public class Attacker : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		Debug.Log ("Trigg" + name);
-	}
+		GameObject fromObj = collider.gameObject;
+		Projectile from = fromObj.GetComponent<Projectile> ();
 
-	void OnTriggerExit2D(Collider2D collider)
-	{
-		Debug.Log ("exit trigg" + name);
+		if (from != null) 
+		{
+			GetComponent<Health>().ReceiveDammage(from.getDammage() );
+			Destroy(fromObj);
+		}
 	}
 
 	public void setSpeedFactor(float factor)
