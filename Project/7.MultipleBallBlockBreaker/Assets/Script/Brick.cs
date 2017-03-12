@@ -90,4 +90,9 @@ public class Brick : MonoBehaviour
 		if (text == null)
 			text = GetComponentInChildren<Text> ();
 	}
+
+	public void setColor(Color theColor)
+	{
+		GetComponentInChildren<Image> ().color = theColor;
+	}
 }
