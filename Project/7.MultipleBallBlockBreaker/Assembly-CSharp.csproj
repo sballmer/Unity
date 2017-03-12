@@ -48,7 +48,9 @@
   <ItemGroup>
      <Compile Include="Assets\Script\Ball.cs" />
      <Compile Include="Assets\Script\BallCreator.cs" />
+     <Compile Include="Assets\Script\BallDisplay.cs" />
      <Compile Include="Assets\Script\Brick.cs" />
+     <Compile Include="Assets\Script\BrickCreator.cs" />
      <Compile Include="Assets\Script\Floor.cs" />
      <Compile Include="Assets\Script\LevelManager.cs" />
  <Reference Include="UnityEngine.UI">
