@@ -46,11 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Button.cs" />
      <Compile Include="Assets\Script\Attacker\Attacker.cs" />
      <Compile Include="Assets\Script\Attacker\Fox.cs" />
      <Compile Include="Assets\Script\Attacker\Lizard.cs" />
+     <Compile Include="Assets\Script\Button.cs" />
      <Compile Include="Assets\Script\Defender.cs" />
+     <Compile Include="Assets\Script\DefenderSpawner.cs" />
      <Compile Include="Assets\Script\FadeIn.cs" />
      <Compile Include="Assets\Script\Health.cs" />
      <Compile Include="Assets\Script\LevelManager.cs" />

@@ -29,9 +29,4 @@ public class LevelManager : MonoBehaviour {
 	{
 		Application.LoadLevel(Application.loadedLevel + 1);
 	}
-
-	void OnTriggerEnter2D(Collider2D collider)
-	{
-		print ("Attacker trigger enter");
-	}
 }

@@ -3,18 +3,17 @@ using System.Collections;
 
 public class Shooter : MonoBehaviour 
 {
-	public GameObject projectile, projectileParent, GunPos;
+	public GameObject projectile, GunPos;
+
+	private GameObject projectileParent;
 
 	// Use this for initialization
 	void Start () 
 	{
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
+		projectileParent = GameObject.Find ("Projectiles");
+
+		if (projectileParent == null)
+			projectileParent = new GameObject("Projectiles");
 	}
 
 	void Fire()

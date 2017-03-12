@@ -4,7 +4,7 @@ using System.Collections;
 public class Button : MonoBehaviour 
 {
 	public GameObject defenderPrefab;
-	public static GameObject selectedDefender;
+	public static GameObject selectedDefender = null;
 
 	private Button[] allButtons;
 
