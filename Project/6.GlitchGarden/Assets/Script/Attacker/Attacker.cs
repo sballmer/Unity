@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Attacker : MonoBehaviour 
 {
+	[Tooltip ("Average number of seconds between appearances")]
+	public float seenPerSecond;
+
 	[Range (0f, 1f)] 
 	public float walkSpeed;
 	public float dammage;
