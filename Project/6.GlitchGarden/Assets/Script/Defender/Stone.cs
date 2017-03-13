@@ -1,15 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Stone : MonoBehaviour {
+public class Stone : MonoBehaviour 
+{
+	private bool underAttack;
+	private GameObject attacker;
+	private Animator anim;
+	private const string IsAttacked = "IsAttacked";
 
-	// Use this for initialization
-	void Start () {
-	
+
+	void Start()
+	{
+		underAttack = false;
+		attacker = null;
+		anim = GetComponent<Animator> ();
+		anim.SetBool (IsAttacked, false);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void Update()
+	{
+		if (underAttack && attacker == null) 
+		{
+			underAttack = false;
+			anim.SetBool(IsAttacked, false);
+		}
+	}
+
+	public void beingAttacked(GameObject enemy)
+	{
+		attacker = enemy;
+		underAttack = true;
+		anim.SetBool (IsAttacked, true);
 	}
 }

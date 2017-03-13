@@ -56,6 +56,11 @@ public class Attacker : MonoBehaviour
 		attackingTarget = target;
 		isAttacking = true;
 		InvokeRepeating ("giveDammage", 0.0001f, periodAttack);
+
+		Stone isAStone = attackingTarget.GetComponent<Stone> ();
+
+		if (isAStone) 
+			isAStone.beingAttacked (this.gameObject);
 	}
 	
 	void giveDammage()

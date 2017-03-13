@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Button : MonoBehaviour 
@@ -19,6 +20,8 @@ public class Button : MonoBehaviour
 		star = GameObject.FindObjectOfType<Stars>();
 
 		GetComponent<SpriteRenderer> ().color = Color.black;
+
+		GetComponentInChildren<Text> ().text = defenderPrefab.GetComponent<Defender> ().price.ToString();
 	}
 
 	void Update()
