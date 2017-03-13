@@ -47,22 +47,27 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\Attacker\Attacker.cs" />
+     <Compile Include="Assets\Script\Attacker\AttackerColliderDeleter.cs" />
+     <Compile Include="Assets\Script\Attacker\AttackerSpawner.cs" />
      <Compile Include="Assets\Script\Attacker\Fox.cs" />
      <Compile Include="Assets\Script\Attacker\Lizard.cs" />
-     <Compile Include="Assets\Script\AttackerSpawner.cs" />
      <Compile Include="Assets\Script\Button.cs" />
-     <Compile Include="Assets\Script\Defender.cs" />
-     <Compile Include="Assets\Script\DefenderSpawner.cs" />
+     <Compile Include="Assets\Script\Defender\Defender.cs" />
+     <Compile Include="Assets\Script\Defender\DefenderSpawner.cs" />
+     <Compile Include="Assets\Script\Defender\Projectile.cs" />
+     <Compile Include="Assets\Script\Defender\Shooter.cs" />
+     <Compile Include="Assets\Script\Defender\Stone.cs" />
      <Compile Include="Assets\Script\FadeIn.cs" />
+     <Compile Include="Assets\Script\GameTimer.cs" />
      <Compile Include="Assets\Script\Health.cs" />
      <Compile Include="Assets\Script\LevelManager.cs" />
+     <Compile Include="Assets\Script\Life.cs" />
+     <Compile Include="Assets\Script\LoseCollider.cs" />
      <Compile Include="Assets\Script\MusicManager.cs" />
      <Compile Include="Assets\Script\OptionManager.cs" />
      <Compile Include="Assets\Script\PlayerPreferencesManager.cs" />
-     <Compile Include="Assets\Script\Projectile.cs" />
-     <Compile Include="Assets\Script\Shooter.cs" />
+     <Compile Include="Assets\Script\Stars.cs" />
      <Compile Include="Assets\Script\StartVolume.cs" />
-     <Compile Include="Assets\Script\Stone.cs" />
      <Compile Include="Assets\Script\StopProjectile.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.7.2/Standalone/UnityEngine.UI.dll</HintPath>
