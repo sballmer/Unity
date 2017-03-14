@@ -49,7 +49,12 @@
      <Compile Include="Assets\Scripts\ActionMaster2.cs" />
      <Compile Include="Assets\Scripts\Ball.cs" />
      <Compile Include="Assets\Scripts\CameraManager.cs" />
+     <Compile Include="Assets\Scripts\DragLaunch.cs" />
      <Compile Include="Assets\Scripts\OurScoreDisplayTest1.cs" />
+     <Compile Include="Assets\Scripts\Pin.cs" />
+     <Compile Include="Assets\Scripts\PinsGroup.cs" />
+     <Compile Include="Assets\Scripts\Pinsetter.cs" />
+     <Compile Include="Assets\Scripts\Swiper.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

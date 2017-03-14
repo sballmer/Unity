@@ -14,6 +14,8 @@ public class CameraManager : MonoBehaviour
 	{
 		if (toFollow)
 			him2Cam = this.transform.position - toFollow.transform.position;
+		else
+			print ("not followed any more");
 	}
 	
 	// Update is called once per frame
