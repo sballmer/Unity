@@ -8,14 +8,12 @@ public class CameraManager : MonoBehaviour
 	public GameObject toFollow;
 
 	private Vector3 him2Cam;
+    private Vector3 StartingPosition;
 
 	// Use this for initialization
 	void Start () 
 	{
-		if (toFollow)
-			him2Cam = this.transform.position - toFollow.transform.position;
-		else
-			print ("not followed any more");
+        StartingPosition = this.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -24,4 +22,14 @@ public class CameraManager : MonoBehaviour
 		if (toFollow && transform.position.z < stopAt) // in front of head pin
 			this.transform.position = toFollow.transform.position + him2Cam;
 	}
+
+    public void ResetCameraPlacement()
+    {
+        transform.position = StartingPosition;
+
+        if (toFollow)
+            him2Cam = this.transform.position - toFollow.transform.position;
+        else
+            print ("not followed any more");
+    }
 }

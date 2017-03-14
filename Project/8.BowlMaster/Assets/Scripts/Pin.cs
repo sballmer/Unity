@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pin : MonoBehaviour 
 {
-    public bool isActive;
+    public bool isActive { get; private set; }
 
     private Rigidbody myRigidbody;
 
@@ -17,6 +17,9 @@ public class Pin : MonoBehaviour
 
     public void checkActive()
     {
+        if (!isActive)
+            return;
+
         Vector3 Up = Vector3.up;
         Vector3 pinDirection = Vector3.Normalize(transform.up);
 
@@ -26,8 +29,6 @@ public class Pin : MonoBehaviour
 
         if (angle > angleThresholdDeg)
             isActive = false;
-        else
-            isActive = true;
     }
         
     public void SetPinUp()
@@ -56,5 +57,11 @@ public class Pin : MonoBehaviour
     public void ResetGravity()
     {
         myRigidbody.useGravity = true;
+    }
+
+    void OnTriggerExit(Collider collide)
+    {
+        if (collide.GetComponent<PinSetter> ())
+            isActive = false;
     }
 }

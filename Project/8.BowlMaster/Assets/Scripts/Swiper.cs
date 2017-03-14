@@ -5,11 +5,13 @@ using UnityEngine;
 public class Swiper : MonoBehaviour 
 {
     private PinsGroup pinsGroup;
+    private Animator anim;
 
 	// Use this for initialization
 	void Start () 
     {
         pinsGroup = GameObject.FindObjectOfType<PinsGroup>();
+        anim = GetComponent<Animator> ();
 	}
 	
     void makePinsUp()
@@ -25,5 +27,15 @@ public class Swiper : MonoBehaviour
     void ResetPinsPosition()
     {
         pinsGroup.ResetPositionToAllPins();
+    }
+
+    public void TidyPins()
+    {
+        anim.SetTrigger ("TidyPins");
+    }
+
+    public void ResetPins()
+    {
+        anim.SetTrigger ("ResetPins");
     }
 }
