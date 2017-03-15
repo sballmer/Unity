@@ -6,25 +6,23 @@ using UnityEngine.UI;
 public class PinSetter : MonoBehaviour 
 {
     public Text ScoreDisplay;
-    private Pin[] allPins;
     private Swiper swiper;
     private SideCamera sideCam;
-    private CameraManager mainCam;
+
+    private bool ballInBox = false;
 
 	// Use this for initialization
 	void Start () 
     {
-        allPins = GameObject.FindObjectsOfType<Pin>();
         swiper = GameObject.FindObjectOfType<Swiper> ();
         sideCam = GameObject.FindObjectOfType<SideCamera> ();
-        mainCam = GameObject.FindObjectOfType<CameraManager> ();
 	}
 
     public int CountStanding()
     {
         int counter = 0;
 
-        foreach (Pin singlePins in allPins)
+        foreach (Pin singlePins in GameObject.FindObjectsOfType<Pin>())
         {
             singlePins.checkActive();
 
@@ -39,16 +37,19 @@ public class PinSetter : MonoBehaviour
 
 	void OnTriggerEnter(Collider collider)
 	{
-		print ("enter with: " + collider.gameObject.name);
+        Ball theBall = collider.GetComponent<Ball> ();
+        if (theBall)
+        {
+            ballInBox = true;
+        }
 	}
 
 	void OnTriggerExit(Collider collider)
 	{
-		print ("exit with: " + collider.gameObject.name);
-
         Ball theBall = collider.GetComponent<Ball> ();
         if (theBall)
         {
+            ballInBox = false;
             theBall.ResetPosition ();
             CountStanding ();
             swiper.TidyPins ();
@@ -62,6 +63,5 @@ public class PinSetter : MonoBehaviour
     void thing()
     {
         sideCam.setMainCamera (false);
-        //mainCam.ResetCameraPlacement ();
     }
 }

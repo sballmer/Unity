@@ -24,8 +24,9 @@ public class Swiper : MonoBehaviour
         pinsGroup.ResetGravityToAllPins();
     }
 
-    void ResetPinsPosition()
+    public void ResetPinsPosition()
     {
+        print ("jkdsfbjfh");
         pinsGroup.ResetPositionToAllPins();
     }
 

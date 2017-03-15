@@ -44,6 +44,6 @@ public class DragLaunch : MonoBehaviour
 	public void MoveStart(float x)
 	{
 		if (!ball.inPlay)
-			ball.transform.Translate(Vector3.right * x);
+			ball.transform.position += Vector3.right * x;
 	}
 }

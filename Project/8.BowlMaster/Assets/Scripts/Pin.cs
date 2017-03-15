@@ -62,6 +62,6 @@ public class Pin : MonoBehaviour
     void OnTriggerExit(Collider collide)
     {
         if (collide.GetComponent<PinSetter> ())
-            isActive = false;
+            Destroy (gameObject); // isActive = false;
     }
 }
