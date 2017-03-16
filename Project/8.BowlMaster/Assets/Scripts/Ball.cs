@@ -6,9 +6,12 @@ public class Ball : MonoBehaviour
 {
 	public Vector3 launchSpeed;
 	public bool inPlay { get; private set;}
+    public float maxTimeLaunch = 25f; // in seconds
+    public float minSpeedRequired = 600f;
 
 	private Rigidbody myRigidBody;
     private Vector3 ballStartPos;
+    private PinSetter pinSetter;
 	//private AudioSource myAudioSource;
 
 	// Use this for initialization
@@ -18,6 +21,7 @@ public class Ball : MonoBehaviour
 		myRigidBody = GetComponent<Rigidbody> ();
 		//myAudioSource = GetComponent<AudioSource> ();
         ballStartPos = transform.position;
+        pinSetter = GameObject.FindObjectOfType<PinSetter>();
 
 		ResetPosition ();
 	}
@@ -35,20 +39,34 @@ public class Ball : MonoBehaviour
 
 	public void Launch (Vector3 velocity)
 	{
-		ResetPosition ();
-
-		inPlay = true;
-		myRigidBody.useGravity = true;
-		myRigidBody.velocity = velocity;
-		//myAudioSource.Play ();
+        if (nextLaunchAvailable() && velocity.magnitude > minSpeedRequired)
+        {
+    		inPlay = true;
+    		myRigidBody.useGravity = true;
+    		myRigidBody.velocity = velocity;
+    		//myAudioSource.Play ();
+            Invoke("OutOfTimeLaunchBall", maxTimeLaunch);
+        }
 	}
 
 	public void ResetPosition()
 	{
+        CancelInvoke("OutOfTimeLaunchBall");
 		inPlay = false;
 		myRigidBody.useGravity = false;
         transform.position = ballStartPos;
         myRigidBody.velocity = Vector3.zero;
 		myRigidBody.angularVelocity = Vector3.zero;
 	}
+
+    bool nextLaunchAvailable()
+    {
+        return !inPlay && !pinSetter.waitForPinsMoving;
+    }
+
+    void OutOfTimeLaunchBall()
+    {
+        ResetPosition();
+        pinSetter.checkScore();
+    }
 }

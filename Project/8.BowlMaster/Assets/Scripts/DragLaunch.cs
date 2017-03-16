@@ -17,6 +17,15 @@ public class DragLaunch : MonoBehaviour
 		//ballRigidbody = ball.GetComponent<Rigidbody> ();
 	}
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            MoveStart(-2f);
+        
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            MoveStart( 2f);
+    }
+
 	public void DragStart()
 	{
 		// capture time and position

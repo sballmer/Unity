@@ -30,7 +30,6 @@ public class PinsGroup : MonoBehaviour
 
     public void ResetPositionToAllPins()
     {
-        print ("resetting pins");
         DestroyAllPins ();
 
         Vector3[] positions = getPinsStartingPosition ();
@@ -40,8 +39,6 @@ public class PinsGroup : MonoBehaviour
             GameObject pin = Instantiate (pinPrefab, Vector3.zero, Quaternion.identity) as GameObject;
             pin.transform.SetParent (this.transform);
             pin.transform.position = pos;
-
-            print ("added " + pin.transform.position);
         }
     }
 

@@ -26,7 +26,6 @@ public class Swiper : MonoBehaviour
 
     public void ResetPinsPosition()
     {
-        print ("jkdsfbjfh");
         pinsGroup.ResetPositionToAllPins();
     }
 

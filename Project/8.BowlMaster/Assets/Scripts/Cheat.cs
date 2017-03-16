@@ -15,7 +15,7 @@ public class Cheat : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             theBall.defaultLaunch();
         }

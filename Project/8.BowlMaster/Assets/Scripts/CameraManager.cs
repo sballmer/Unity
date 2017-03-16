@@ -15,7 +15,6 @@ public class CameraManager : MonoBehaviour
 	{
         StartingPosition = this.transform.position;
         ResetCameraPlacement ();
-        print ("camera pos: " + StartingPosition);
 	}
 	
 	// Update is called once per frame

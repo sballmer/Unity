@@ -6,33 +6,51 @@ using UnityEngine.UI;
 public class PinSetter : MonoBehaviour 
 {
     public Text ScoreDisplay;
-    private Swiper swiper;
-    private SideCamera sideCam;
+    public bool ballIn { get; private set; }
+    public bool waitForPinsMoving { get ; private set; }
 
-    private bool ballInBox = false;
+    //private SideCamera sideCam;
+    private ScoreKeeper score;
+
+    private int scoreComputed;
 
 	// Use this for initialization
 	void Start () 
     {
-        swiper = GameObject.FindObjectOfType<Swiper> ();
-        sideCam = GameObject.FindObjectOfType<SideCamera> ();
+        ballIn = false;
+        waitForPinsMoving = false;
+        //sideCam = GameObject.FindObjectOfType<SideCamera> ();
+        score = GameObject.FindObjectOfType<ScoreKeeper> ();
+
+        CountStanding();
 	}
+
+    void Update()
+    {
+        if (waitForPinsMoving)
+        {
+            if (!IsAPinMoving())
+                checkScore();
+        }
+    }
 
     public int CountStanding()
     {
-        int counter = 0;
+        int count = 0;
 
         foreach (Pin singlePins in GameObject.FindObjectsOfType<Pin>())
         {
             singlePins.checkActive();
 
             if (singlePins.isActive)
-                counter++;
+                count++;
         }
 
-        ScoreDisplay.text = counter.ToString();
+        scoreComputed = 10 - count;
 
-        return counter;
+        ScoreDisplay.text = scoreComputed.ToString();
+
+        return count;
     }
 
 	void OnTriggerEnter(Collider collider)
@@ -40,28 +58,38 @@ public class PinSetter : MonoBehaviour
         Ball theBall = collider.GetComponent<Ball> ();
         if (theBall)
         {
-            ballInBox = true;
+            ballIn = true;
         }
-	}
+    }
 
 	void OnTriggerExit(Collider collider)
 	{
         Ball theBall = collider.GetComponent<Ball> ();
         if (theBall)
         {
-            ballInBox = false;
+            ballIn = false;
             theBall.ResetPosition ();
-            CountStanding ();
-            swiper.TidyPins ();
-            sideCam.setMainCamera (true);
-            Invoke ("thing", 7f);
-
-            return;
+            waitForPinsMoving = true;
         }
 	}
 
-    void thing()
+    public void checkScore()
     {
-        sideCam.setMainCamera (false);
+        CountStanding ();
+        score.Scored(scoreComputed);
+        waitForPinsMoving = false;
+
+        //sideCam.setMainCamera (false);
+    }
+
+    bool IsAPinMoving()
+    {
+        foreach (Pin singlePin in GameObject.FindObjectsOfType<Pin>())
+        {
+            if (singlePin.isMoving())
+                return true;
+        }
+
+        return false;
     }
 }

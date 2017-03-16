@@ -64,4 +64,15 @@ public class Pin : MonoBehaviour
         if (collide.GetComponent<PinSetter> ())
             Destroy (gameObject); // isActive = false;
     }
+
+    public bool isMoving()
+    {
+        const float maxAuthorizedLinear = 5f , // 1cm/s
+                    maxAuthorizedRotationnal= 10f; // 5deg/s
+
+        float linearAverage = myRigidbody.velocity.magnitude;
+        float rotationalAverage = myRigidbody.angularVelocity.magnitude * Mathf.Rad2Deg;
+
+        return linearAverage > maxAuthorizedLinear || rotationalAverage > maxAuthorizedRotationnal;
+    }
 }
