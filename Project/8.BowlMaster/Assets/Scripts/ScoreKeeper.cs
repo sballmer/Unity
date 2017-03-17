@@ -81,10 +81,10 @@ public class ScoreKeeper : MonoBehaviour
             points = 10;
 
 
-        if (added && actualPhase == LevelPhase.SECOND_SHOT)
+        if (!added && actualPhase == LevelPhase.SECOND_SHOT)
             points -= levelScore[levelIndex()].firstScore;
         
-        else if (added && actualPhase == LevelPhase.SECOND_SHOT)
+        else if (!added && actualPhase == LevelPhase.SECOND_SHOT)
             points -= levelScore[levelIndex()].firstScore + levelScore[levelIndex()].secondScore;
 
 
@@ -204,6 +204,9 @@ public class ScoreKeeper : MonoBehaviour
             break;
         }
 
+        if (!isFirstLevel())
+            computeTotalScore(levelBefore());
+        
         computeTotalScore();
         refreshTab();
 
@@ -291,12 +294,6 @@ public class ScoreKeeper : MonoBehaviour
 
     void refreshTab()
     {
-        scoreDisplay.setScore(1, 3, ScoreDisplayer.DISPLAYER.FIRST_SHOT);
-
-//        const string STRIKE = "STRIKE (X)" ,
-//                     SPAR= "SPAR (/)" ,
-//                     NONE= "NONE";
-        
         int counter = 1;
         int continousScore = 0;
 
@@ -311,27 +308,27 @@ public class ScoreKeeper : MonoBehaviour
 
         foreach (LevelScore i_score in levelScore)
         {
-//            string toPrint = "Level " + counter + ":\n";
-//            toPrint += "first shot: ";
+//                string toPrint = "Level " + counter + ":\n";
+//                toPrint += "first shot: ";
 
-//                 if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         toPrint += i_score.firstScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.SECOND_DISPLAY)        toPrint += i_score.firstScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_FIRST)    toPrint += i_score.firstScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE)         toPrint += i_score.firstScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_SECOND)   toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_STRIKE)        toPrint += STRIKE + "\n";
+//                     if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         toPrint += i_score.firstScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.SECOND_DISPLAY)        toPrint += i_score.firstScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_FIRST)    toPrint += i_score.firstScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE)         toPrint += i_score.firstScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_SECOND)   toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_STRIKE)        toPrint += STRIKE + "\n";
 //
-//            else if (i_score.state == LevelScore.ScoreDisplay.SPARE_WAITING_THIRD)   toPrint += i_score.firstScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE_THIRD)   toPrint += i_score.firstScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.SPARE_STRIKE)          toPrint += i_score.firstScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_TWO)    toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_ONE)    toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_THIRD)          toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_SPARE)          toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE)          toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.SPARE_WAITING_THIRD)   toPrint += i_score.firstScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE_THIRD)   toPrint += i_score.firstScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.SPARE_STRIKE)          toPrint += i_score.firstScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_TWO)    toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_ONE)    toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_THIRD)          toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_SPARE)          toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE)          toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            toPrint += STRIKE + "\n";
 
                  if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            scoreDisplay.setScore(counter, NONE, FIRST);
             else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         scoreDisplay.setScore(counter, i_score.firstScore, FIRST);
@@ -352,26 +349,26 @@ public class ScoreKeeper : MonoBehaviour
             else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    scoreDisplay.setScore(counter, STRIKE, FIRST);
             else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            scoreDisplay.setScore(counter, STRIKE, FIRST);
 
-//            toPrint += "second shot: ";
-
-//                 if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.SECOND_DISPLAY)        toPrint += i_score.secondScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_FIRST)    toPrint += SPAR + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE)         toPrint += SPAR + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_SECOND)   toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_STRIKE)        toPrint += NONE + "\n";
+//                toPrint += "second shot: ";
 //
-//            else if (i_score.state == LevelScore.ScoreDisplay.SPARE_WAITING_THIRD)   toPrint += SPAR + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE_THIRD)   toPrint += SPAR + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.SPARE_STRIKE)          toPrint += SPAR + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_TWO)    toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_ONE)    toPrint += i_score.secondScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_THIRD)          toPrint += i_score.secondScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_SPARE)          toPrint += i_score.secondScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE)          toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    toPrint += STRIKE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            toPrint += STRIKE + "\n";
+//                     if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.SECOND_DISPLAY)        toPrint += i_score.secondScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_FIRST)    toPrint += SPAR + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE)         toPrint += SPAR + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_SECOND)   toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_STRIKE)        toPrint += NONE + "\n";
+//
+//                else if (i_score.state == LevelScore.ScoreDisplay.SPARE_WAITING_THIRD)   toPrint += SPAR + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE_THIRD)   toPrint += SPAR + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.SPARE_STRIKE)          toPrint += SPAR + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_TWO)    toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_ONE)    toPrint += i_score.secondScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_THIRD)          toPrint += i_score.secondScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_SPARE)          toPrint += i_score.secondScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE)          toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    toPrint += STRIKE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            toPrint += STRIKE + "\n";
 
                  if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            scoreDisplay.setScore(counter, NONE, SECOND);
             else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         scoreDisplay.setScore(counter, NONE, SECOND);
@@ -394,26 +391,26 @@ public class ScoreKeeper : MonoBehaviour
 
             if (counter == 10) // printing last level
             {
-//                toPrint += "third shot: ";
-
-//                     if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.SECOND_DISPLAY)        toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_FIRST)    toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE)         toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_SECOND)   toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_STRIKE)        toPrint += NONE + "\n";
+//                    toPrint += "third shot: ";
 //
-//                else if (i_score.state == LevelScore.ScoreDisplay.SPARE_WAITING_THIRD)   toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE_THIRD)   toPrint += i_score.thirdScore + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.SPARE_STRIKE)          toPrint += STRIKE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_TWO)    toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_ONE)    toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_THIRD)          toPrint += i_score.thirdScore + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_SPARE)          toPrint += SPAR + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE)          toPrint += NONE + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    toPrint += i_score.thirdScore + "\n";
-//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            toPrint += STRIKE + "\n";
+//                         if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.SECOND_DISPLAY)        toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_FIRST)    toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE)         toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_SECOND)   toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_STRIKE)        toPrint += NONE + "\n";
+//
+//                    else if (i_score.state == LevelScore.ScoreDisplay.SPARE_WAITING_THIRD)   toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE_THIRD)   toPrint += i_score.thirdScore + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.SPARE_STRIKE)          toPrint += STRIKE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_TWO)    toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_ONE)    toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_THIRD)          toPrint += i_score.thirdScore + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_SPARE)          toPrint += SPAR + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE)          toPrint += NONE + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    toPrint += i_score.thirdScore + "\n";
+//                    else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            toPrint += STRIKE + "\n";
 
                      if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            scoreDisplay.setScore(counter, NONE, THIRD);
                 else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         scoreDisplay.setScore(counter, NONE, THIRD);
@@ -435,27 +432,27 @@ public class ScoreKeeper : MonoBehaviour
                 else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            scoreDisplay.setScore(counter, STRIKE, THIRD);
             }
 
-//            toPrint += "total score: ";
+//                toPrint += "subtotal score: ";
             continousScore += i_score.totalScore;
-
-//                 if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.SECOND_DISPLAY)        toPrint += continousScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_FIRST)    toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE)         toPrint += continousScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_SECOND)   toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_STRIKE)        toPrint += continousScore + "\n";
 //
-//            else if (i_score.state == LevelScore.ScoreDisplay.SPARE_WAITING_THIRD)   toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE_THIRD)   toPrint += continousScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.SPARE_STRIKE)          toPrint += continousScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_TWO)    toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_ONE)    toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_THIRD)          toPrint += continousScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_SPARE)          toPrint += continousScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE)          toPrint += NONE + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    toPrint += continousScore + "\n";
-//            else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            toPrint += continousScore + "\n";
+//                     if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.SECOND_DISPLAY)        toPrint += continousScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_FIRST)    toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE)         toPrint += continousScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.WAITING_NEXT_SECOND)   toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_STRIKE)        toPrint += continousScore + "\n";
+//
+//                else if (i_score.state == LevelScore.ScoreDisplay.SPARE_WAITING_THIRD)   toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.DISPLAY_SPARE_THIRD)   toPrint += continousScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.SPARE_STRIKE)          toPrint += continousScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_TWO)    toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_WAITING_ONE)    toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_THIRD)          toPrint += continousScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_SPARE)          toPrint += continousScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE)          toPrint += NONE + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    toPrint += continousScore + "\n";
+//                else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            toPrint += continousScore + "\n";
 
                  if (i_score.state == LevelScore.ScoreDisplay.NO_DISPLAY)            scoreDisplay.setScore(counter, NONE, SUBTOTAL);
             else if (i_score.state == LevelScore.ScoreDisplay.FIRST_DISPLAY)         scoreDisplay.setScore(counter, NONE, SUBTOTAL);
@@ -476,13 +473,13 @@ public class ScoreKeeper : MonoBehaviour
             else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_TWICE_THIRD)    scoreDisplay.setScore(counter, continousScore, SUBTOTAL);
             else if (i_score.state == LevelScore.ScoreDisplay.STRIKE_XXX)            scoreDisplay.setScore(counter, continousScore, SUBTOTAL);
 
-//            toPrint += "\n";
-//            print(toPrint);
+//                toPrint += "\n";
+//                print(toPrint);
             counter++;
         }
 
-//        print("Very total score: " + continousScore);
-        scoreDisplay.setScore(counter, continousScore, ScoreDisplayer.DISPLAYER.TOTAL);
+//            print("Very total score: " + continousScore);
+        scoreDisplay.setScore(1 /* dont care about level for total score */, continousScore, ScoreDisplayer.DISPLAYER.TOTAL);
     }
 
     void handleSwiper()

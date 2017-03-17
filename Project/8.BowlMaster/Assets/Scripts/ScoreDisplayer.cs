@@ -32,7 +32,8 @@ public class ScoreDisplayer : MonoBehaviour
 
     public void setScore(int level, int score, DISPLAYER theDisplay)
     {
-        if (level >= 1 && level <= 10 && score >= 0 && score <= 10)
+//        print("score : " + score + " to " + theDisplay.ToString() + " in level " + level);
+        if (level >= 1 && level <= 10)
         {
             if (theDisplay == DISPLAYER.FIRST_SHOT)
                 allDisplayer[level - 1].first.text = score.ToString();
@@ -49,6 +50,7 @@ public class ScoreDisplayer : MonoBehaviour
 
     public void setScore(int level, SPECIAL score, DISPLAYER theDisplay)
     {
+//        print("score : " + score + " to " + theDisplay.ToString() + " in level " + level);
         string symbole = "";
 
         if (score == SPECIAL.SPAR)
