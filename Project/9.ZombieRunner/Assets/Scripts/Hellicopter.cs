@@ -8,24 +8,19 @@ public class Hellicopter : MonoBehaviour
 
     private bool called = false;
     private AudioSource audioSource;
+    private Rigidbody rigidbody;
 
 	// Use this for initialization
 	void Start () 
     {
         audioSource = GetComponent<AudioSource>();
+        rigidbody = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        if (!called)
-        {
-            if (Input.GetButtonDown("CallHeli"))
-            {
-                PlayHeliCopterCall();
-                called = true;
-            }
-        }
+
 	}
 
     void PlayHeliCopterCall()
@@ -33,5 +28,15 @@ public class Hellicopter : MonoBehaviour
         audioSource.clip = callSound;
         audioSource.Play();
         print("playing");
+    }
+
+    public void Call() 
+    {
+        if (!called)
+        {
+            PlayHeliCopterCall();
+            called = true;
+            rigidbody.velocity = new Vector3(0f, 0f, 50f);
+        }
     }
 }

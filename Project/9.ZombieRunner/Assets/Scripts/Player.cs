@@ -6,8 +6,10 @@ public class Player : MonoBehaviour
 {
     public GameObject playerSpawPoint;
     public bool respawnButton;
+    public Hellicopter hellicopter;
 
     private Transform[] spawnPos;
+    private InnerVoice innerVoice;
 
 	// Use this for initialization
 	void Start () 
@@ -15,7 +17,8 @@ public class Player : MonoBehaviour
         respawnButton = false;
         spawnPos = playerSpawPoint.GetComponentsInChildren<Transform>();
 
-        SetPosToARandomStartingPoint();
+        innerVoice = GetComponentInChildren<InnerVoice>();
+        innerVoice.PlayWhatHappened();
 	}
 
     void Update()
@@ -37,5 +40,11 @@ public class Player : MonoBehaviour
     public void ReSpawn()
     {
         SetPosToARandomStartingPoint();
+    }
+
+    void OnFindClearArea ()
+    {
+        print("Found a clear area, helicopter comming");
+        hellicopter.Call();
     }
 }
